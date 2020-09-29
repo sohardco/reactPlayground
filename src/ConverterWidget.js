@@ -17,7 +17,7 @@ class NumInput extends React.Component {
     this.state = { inputValue: '' };
   }
 
-  onChange(value) {
+  onChange = (value) => {
     this.setState({ inputValue: value }, () => this.onAmountConvert());
   }
 
@@ -27,7 +27,11 @@ class NumInput extends React.Component {
 
   render() {
     return (
-      <InputNumber min={1} value={this.state.inputValue} onChange={this.onChange} />
+      <InputNumber
+        min={1}
+        value={this.state.inputValue}
+        onChange={this.onChange}
+        />
     );
   }
 }
@@ -42,14 +46,15 @@ class SelectCurrency extends React.Component {
     this.props.currencySelect(this.state.selectedCurrency);
   }
 
-  onChange(value) {
-    this.setState({selectedCurrency: value}, () => this.onCurrencySelect());
+  onChange = (value) => {
+    this.setState({ selectedCurrency: value }, () => this.onCurrencySelect());
   }
 
   render() {
     return (
       <Select
         defaultValue="Please,choose currency to convert to"
+
         onChange={this.onChange}
       >
         {Object.keys(this.props.currencies).map((curr) => <Option key={curr} value={curr}>{curr}</Option>)}
@@ -62,14 +67,13 @@ class SelectCurrency extends React.Component {
 class ConverterWidget extends React.Component {
   constructor(props) {
     super(props);
+    this.onAmountToConvert = this.onAmountToConvert.bind(this);
     this.state = {
       currencies: {},
       selectedCurrency: '',
       amountToConvert: '',
       converted: '',
       result: '',
-      formValid: true,
-      error: '',
     };
   }
 
@@ -126,8 +130,9 @@ class ConverterWidget extends React.Component {
   //   }
   // }
 
-  convert() {
-    const coeff = this.state.currencies[this.state.selectedCurrency];
+  convert = () => {
+    const selected = this.state.selectedCurrency;
+    const coeff = this.state.currencies[selected];
     const amount = this.state.amountToConvert;
     const converted = amount * coeff;
     this.setState({
@@ -145,19 +150,19 @@ class ConverterWidget extends React.Component {
       <>
         <Card title="Simple converter">
           <NumInput
-            amountConvert={this.onAmountToConvert.bind(this)} //узнать можно ли заменить
+            amountConvert={this.onAmountToConvert} //узнать можно ли заменить
           />
           <SelectCurrency
             currencies={this.state.currencies}
             currencySelect={this.onCurrencySelect.bind(this)}
           />
           <Button
-            onClick={this.onClick}
+            onClick={this.convert}
             type="primary" // уточнить за стайлинг ЖСХ
           >
             Convert
           </Button>
-          <p>{this.state.formValid ? this.state.result : this.state.error}</p>
+          <p>{this.state.result}</p>
         </Card>
       </>
     )
