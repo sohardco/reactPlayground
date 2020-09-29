@@ -54,7 +54,6 @@ class SelectCurrency extends React.Component {
     return (
       <Select
         defaultValue="Please,choose currency to convert to"
-
         onChange={this.onChange}
       >
         {Object.keys(this.props.currencies).map((curr) => <Option key={curr} value={curr}>{curr}</Option>)}
@@ -134,7 +133,7 @@ class ConverterWidget extends React.Component {
     const selected = this.state.selectedCurrency;
     const coeff = this.state.currencies[selected];
     const amount = this.state.amountToConvert;
-    const converted = amount * coeff;
+    const converted = (amount * coeff).toFixed(2);
     this.setState({
       converted,
     }, () => this.result());
