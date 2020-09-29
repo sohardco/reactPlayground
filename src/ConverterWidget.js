@@ -1,70 +1,164 @@
 import React from 'react';
-import {Button, Select, Input} from 'antd';
+import {
+  Button,
+  Select,
+  InputNumber,
+  Card,
+} from 'antd';
 import 'antd/dist/antd.css';
 
-const { Option } = Select; //спросить почему так сделано
+const { Option } = Select;  //спросить почему так сделано
 
 // function convert(amount, rate) {}
 
 class NumInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {inputValue: ''}
+    this.state = { inputValue: '' };
   }
 
-  onChange = (e) => {
-    this.setState({inputValue: e.target.value})
+  onChange(value) {
+    this.setState({ inputValue: value }, () => this.onAmountConvert());
+  }
+
+  onAmountConvert() {
+    this.props.amountConvert(this.state.inputValue);
   }
 
   render() {
     return (
-      <Input min={1} value={this.state.inputValue} onChange={this.onChange} />
-    )
+      <InputNumber min={1} value={this.state.inputValue} onChange={this.onChange} />
+    );
+  }
+}
+
+class SelectCurrency extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedCurrency: '' };
+  }
+
+  onCurrencySelect() {
+    this.props.currencySelect(this.state.selectedCurrency);
+  }
+
+  onChange(value) {
+    this.setState({selectedCurrency: value}, () => this.onCurrencySelect());
+  }
+
+  render() {
+    return (
+      <Select
+        defaultValue="Please,choose currency to convert to"
+        onChange={this.onChange}
+      >
+        {Object.keys(this.props.currencies).map((curr) => <Option key={curr} value={curr}>{curr}</Option>)}
+      </Select>
+
+    );
   }
 }
 
 class ConverterWidget extends React.Component {
   constructor(props) {
     super(props);
-    this.state ={
-        currencies: [],
-    }
-  }
-
-
-  handleClick() {
-
+    this.state = {
+      currencies: {},
+      selectedCurrency: '',
+      amountToConvert: '',
+      converted: '',
+      result: '',
+      formValid: true,
+      error: '',
+    };
   }
 
   componentDidMount() {
     fetch('https://api.exchangeratesapi.io/latest?base=USD')
-    .then((response) => {
-      return response.json();
-    })
-    .then(data => {
-      const currencyCodes = Object.keys(data.rates).map(cur => {
-        return {value: cur, display: cur}
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          currencies: data.rates,
+        });
+      }).catch((error) => {
+        console.log(error);
       });
-      this.setState({
-        currencies: currencyCodes
-      });
-    }).catch(error => {
-      console.log(error);
+  }
+
+  onCurrencySelect(value) {
+    this.setState({
+      selectedCurrency: value,
     });
   }
 
-  render() {
+  onAmountToConvert(value) {
+    this.setState({
+      amountToConvert: value,
+    });
+  }
 
+  // onClick() {
+  //   this.handleValidation
+  //   this.convert()
+  // }
+
+  // handleValidation = () => {
+  //   const {
+  //     selectedCurrency,
+  //     amountToConvert,
+  //     formValid,
+  //     error
+  //   } = this.state;
+  //
+  //   if(typeof(amountConvert) === 'string'){
+  //     this.setState({
+  //       error: "Please fill amount with numeric data",
+  //       formValid: false
+  //     })
+  //
+  //   }
+  //
+  //   if(selectedCurrency === '' || selectedCurrency === null){
+  //     this.setState({
+  //       error: "Please select currency",
+  //       formValid: false
+  //     })
+  //   }
+  // }
+
+  convert() {
+    const coeff = this.state.currencies[this.state.selectedCurrency];
+    const amount = this.state.amountToConvert;
+    const converted = amount * coeff;
+    this.setState({
+      converted,
+    }, () => this.result());
+  }
+
+  result() {
+    const res = `Amount of ${this.state.selectedCurrency} in ${this.state.amountToConvert} USD is ${this.state.converted}`;
+    this.setState({ result: res });
+  }
+
+  render() {
     return (
       <>
-        <NumInput />
-        <Select
-          defaultValue="Please,choose currency to convert to"
-        >
-          {this.state.currencies.map((curr) => <Option key={curr.value} value={curr.value}>{curr.display}</Option>)}
-        </Select>
-        <Button type="primary" // уточнить за стайлинг ЖСХ
-          >Convert</Button>
+        <Card title="Simple converter">
+          <NumInput
+            amountConvert={this.onAmountToConvert.bind(this)} //узнать можно ли заменить
+          />
+          <SelectCurrency
+            currencies={this.state.currencies}
+            currencySelect={this.onCurrencySelect.bind(this)}
+          />
+          <Button
+            onClick={this.onClick}
+            type="primary" // уточнить за стайлинг ЖСХ
+          >
+            Convert
+          </Button>
+          <p>{this.state.formValid ? this.state.result : this.state.error}</p>
+        </Card>
       </>
     )
   }
