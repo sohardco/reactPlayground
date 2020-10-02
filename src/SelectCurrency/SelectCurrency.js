@@ -1,11 +1,13 @@
 import React from 'react';
 import { Select } from 'antd';
+import styles from './SelectCurrency.module.css';
 
 const { Option } = Select;
 
-const SelectCurrency = ({ currencies = [], onCurrencySelect }) => (
+const SelectCurrency = ({ defaultValue, currencies = [], onCurrencySelect }) => (
   <Select
-    defaultValue="Please,choose currency to convert to"
+    className={styles.select}
+    defaultValue={defaultValue}
     onChange={onCurrencySelect}
   >
     {currencies.map((currency) => (

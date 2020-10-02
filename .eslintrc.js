@@ -18,7 +18,7 @@ module.exports = {
     'react',
   ],
   rules: {
-    'max-classes-per-file': ['error', 5],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     'max-len': ['error', { code: 200 }],
   },
 };

@@ -1,0 +1,5 @@
+.result {
+  display:flex;
+  margin: 25px 0 10px 0;
+  justify-content: center;
+}

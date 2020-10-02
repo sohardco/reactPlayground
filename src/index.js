@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Converter from './ConverterWidget';
+import Converter from './Converter/ConverterWidget';
 
 ReactDOM.render(
   <Converter />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
