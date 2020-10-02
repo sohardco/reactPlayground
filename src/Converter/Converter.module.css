@@ -17,6 +17,7 @@
   align-items: flex-start;
   flex-direction: row;
 }
+
 .spinner {
   display: flex;
   justify-content: center;
