@@ -5,9 +5,9 @@ import {
   Card,
 } from 'antd';
 
-import NumInput from '../NumInput/NumInput';
-import SelectCurrency from '../SelectCurrency/SelectCurrency';
-import Result from '../Result/Result';
+import Result from 'Result';
+import NumInput from 'NumInput';
+import SelectCurrency from 'SelectCurrency';
 
 import 'antd/dist/antd.css';
 import styles from './Converter.module.css';
