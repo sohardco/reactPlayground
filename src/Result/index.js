@@ -8,7 +8,7 @@ const Result = ({ input, fromCurrency, toCurrency, result }) => {
 
   return (
     <p className={styles.result}>
-      {`Amount of ${toCurrency} in ${input} ${fromCurrency} is ${result.toFixed(2)}`}
+      {`${input} ${fromCurrency} is  ${result.toFixed(2)} ${toCurrency}`}
     </p>
   );
 };

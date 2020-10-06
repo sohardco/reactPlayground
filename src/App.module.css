@@ -1,0 +1,12 @@
+.page {
+  display:flex;
+  justify-content: center;
+}
+
+.card {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  width:500px;
+  height: 200px
+}

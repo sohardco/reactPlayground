@@ -4,11 +4,13 @@ import styles from './SelectCurrency.module.css';
 
 const { Option } = Select;
 
-const SelectCurrency = ({ defaultValue, currencies = [], onCurrencySelect }) => (
+const SelectCurrency = ({ defaultValue, currencies = [], onCurrencySelect, onDropdownOpen }) => (
   <Select
+    showSearch
     className={styles.select}
     defaultValue={defaultValue}
-    onChange={onCurrencySelect}
+    onSelect={onCurrencySelect}
+    onChange={onDropdownOpen}
   >
     {currencies.map((currency) => (
       <Option
