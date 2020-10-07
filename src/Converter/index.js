@@ -5,10 +5,9 @@ import Result from 'Result';
 import NumInput from 'NumInput';
 import SelectCurrency from 'SelectCurrency';
 
-// import 'antd/dist/antd.css';
 import styles from './Converter.module.css';
 
-const Converter = ({baseValue, currencies, onDataReceive }) => {
+const Converter = ({ baseValue, currencies, onDataReceive }) => {
   const [selectedCurrency, setToSelectedCurrency] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [result, setResult] = useState('');
