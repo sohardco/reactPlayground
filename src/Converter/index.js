@@ -21,6 +21,13 @@ const Converter = ({ baseValue, currencies, onDataReceive }) => {
     setResult('');
   };
 
+  const onNumberInputChange = (value) => {
+    if (result !== '') {
+      setResult('');
+    }
+    setInputValue(value);
+  };
+
   return (
     <>
       <div className={styles.cardContent}>
@@ -30,7 +37,7 @@ const Converter = ({ baseValue, currencies, onDataReceive }) => {
           onCurrencySelect={onDataReceive}
           onDropdownOpen={onDropdownOpen}
         />
-        <NumInput className={styles.numInput} onChange={setInputValue} />
+        <NumInput className={styles.numInput} onChange={onNumberInputChange} />
         <SelectCurrency
           defaultValue="Convert To"
           currencies={Object.keys(currencies)}
