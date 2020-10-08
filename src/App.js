@@ -5,7 +5,7 @@ import Loader from 'Loader';
 import Converter from 'Converter';
 
 import 'antd/dist/antd.css';
-import styles from './App.module.css';
+import styles from './App.css';
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
