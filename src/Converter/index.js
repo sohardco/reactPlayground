@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 
 import Result from 'Result';
@@ -9,13 +9,19 @@ import styles from './Converter.module.css';
 
 const Converter = ({ baseValue, currencies, onDataReceive }) => {
   const [selectedCurrency, setToSelectedCurrency] = useState('');
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(0);
   const [result, setResult] = useState('');
 
   const convert = () => {
     const coeff = currencies[selectedCurrency];
     setResult(inputValue * coeff);
   };
+
+  // useEffect(() => {
+  //   if (inputValue && selectedCurrency) {
+  //     convert();
+  //   }
+  // }, [baseValue, inputValue, selectedCurrency]);
 
   const onDropdownOpen = () => {
     setResult('');
