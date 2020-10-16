@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
+import { Switch, Route } from 'react-router-dom';
 
-import Loader from 'Loader';
-import Converter from 'Converter';
-import useCurrencies from './useCurrencies';
+import Loader from 'components/Loader';
+import Converter from 'components/Converter';
+import Header from 'components/Header';
+import useCurrencies from '../../useCurrencies';
 
-import 'antd/dist/antd.css';
 import styles from './App.module.css';
 
 const App = () => {
@@ -27,13 +28,15 @@ const App = () => {
 
 const AppWrapper = () => (
   <>
+    <Header />
     <div className={styles.page}>
-      <Card
+      <Route path="/converter" component={App} />
+      {/* <Card
         className={styles.card}
         title="Simple converter"
       >
-      <App />
-      </Card>
+        <App />
+      </Card> */}
     </div>
   </>
 );

@@ -7,7 +7,7 @@ const useCurrencies = (baseValue) => {
   useEffect(() => {
     setIsLoading(true);
 
-    const getRates = async() => {
+    const getRates = async () => {
       const response = await fetch(`https://api.exchangeratesapi.io/latest?base=${baseValue}`);
       const { rates } = await response.json();
       setRates(rates);

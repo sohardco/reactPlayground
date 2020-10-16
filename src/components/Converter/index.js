@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 
-import Result from 'Result';
-import NumInput from 'NumInput';
-import SelectCurrency from 'SelectCurrency';
+import Result from 'components/Result';
+import NumInput from 'components/NumInput';
+import SelectCurrency from 'components/SelectCurrency';
 
 import styles from './Converter.module.css';
 

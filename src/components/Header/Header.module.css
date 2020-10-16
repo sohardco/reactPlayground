@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  min-height: 10vh;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
