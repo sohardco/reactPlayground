@@ -1,27 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from 'antd';
+import React, { useState, useContext } from 'react';
+import { Card, Button } from 'antd';
 
 import Result from 'components/Result';
 import NumInput from 'components/NumInput';
 import SelectCurrency from 'components/SelectCurrency';
+import { CurrencyContext } from 'contexts/currency';
 
 import styles from './Converter.module.css';
 
-const Converter = ({ baseValue, currencies, onDataReceive }) => {
+const Converter = () => {
+  const { baseValue, globalRates, setBase } = useContext(CurrencyContext);
   const [selectedCurrency, setToSelectedCurrency] = useState('');
   const [inputValue, setInputValue] = useState(0);
   const [result, setResult] = useState('');
 
   const convert = () => {
-    const coeff = currencies[selectedCurrency];
+    const coeff = globalRates[selectedCurrency];
     setResult(inputValue * coeff);
   };
-
-  // useEffect(() => {
-  //   if (inputValue && selectedCurrency) {
-  //     convert();
-  //   }
-  // }, [baseValue, inputValue, selectedCurrency]);
 
   const onDropdownOpen = () => {
     setResult('');
@@ -39,14 +35,14 @@ const Converter = ({ baseValue, currencies, onDataReceive }) => {
       <div className={styles.cardContent}>
         <SelectCurrency
           defaultValue={baseValue}
-          currencies={Object.keys(currencies)}
-          onCurrencySelect={onDataReceive}
+          currencies={Object.keys(globalRates)}
+          onCurrencySelect={setBase}
           onDropdownOpen={onDropdownOpen}
         />
         <NumInput className={styles.numInput} onChange={onNumberInputChange} />
         <SelectCurrency
           defaultValue="Convert To"
-          currencies={Object.keys(currencies)}
+          currencies={Object.keys(globalRates)}
           onCurrencySelect={setToSelectedCurrency}
           onDropdownOpen={onDropdownOpen}
         />

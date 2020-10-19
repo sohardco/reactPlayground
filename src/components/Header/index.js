@@ -5,16 +5,20 @@ import { BankTwoTone } from '@ant-design/icons';
 
 import styles from './Header.module.css';
 
-const Header = () => {
+const Header = ({ radioDefault, onRadioState }) => {
   const location = useLocation();
+
+  const onChange = e => {
+    onRadioState(e.target.value);
+  };
 
   if (location.pathname === '/converter') {
     return (
-      <div className={styles.logo}>
+      <div className={styles.header}>
         <Link to="/">
-          <div>
-            <BankTwoTone />
-            <h3>Converter</h3>
+          <div className={styles.logo}>
+            <BankTwoTone className={styles.icon} />
+            <h2>Converter</h2>
           </div>
         </Link>
       </div>
@@ -24,13 +28,13 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <Link to="/">
-        <div>
-          <BankTwoTone />
-          <h3>Converter</h3>
+        <div className={styles.logo}>
+          <BankTwoTone className={styles.icon} />
+          <h2>Converter</h2>
         </div>
       </Link>
       <div>
-        <Radio.Group defaultValue="USD" buttonStyle="solid">
+        <Radio.Group defaultValue={radioDefault} buttonStyle="solid" onChange={onChange}>
           <Radio.Button value="USD">USD</Radio.Button>
           <Radio.Button value="EUR">EUR</Radio.Button>
         </Radio.Group>

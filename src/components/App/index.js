@@ -1,44 +1,47 @@
-import React, { useState } from 'react';
-import { Card } from 'antd';
-import { Switch, Route } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import Loader from 'components/Loader';
 import Converter from 'components/Converter';
 import Header from 'components/Header';
-import useCurrencies from '../../useCurrencies';
-
-import styles from './App.module.css';
+import RateDisplay from 'components/RateDisplay';
+import { CurrencyContext } from 'contexts/currency';
 
 const App = () => {
-  const [baseValue, setBase] = useState('EUR');
-  const [currencies, isLoading] = useCurrencies(baseValue);
+  const { poundRates, isLoading } = useContext(CurrencyContext);
+  const [radioState, setRadioState] = useState('USD');
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <>
+        <Header
+          radioDefault={radioState}
+        />
+        <Loader />
+        ;
+      </>
+    );
   }
 
   return (
-    <Converter
-      baseValue={baseValue}
-      currencies={currencies}
-      onDataReceive={setBase}
-    />
+    <>
+      <Header
+        radioDefault={radioState}
+        onRadioState={setRadioState}
+      />
+      <Switch>
+        {/* <div className={styles.page}> */}
+        <Route exact path="/">
+          <RateDisplay
+            radioState={radioState}
+            poundRates={poundRates}
+          />
+        </Route>
+        <Route exact path="/converter" component={Converter} />
+        {/* </div> */}
+      </Switch>
+    </>
   );
 };
 
-const AppWrapper = () => (
-  <>
-    <Header />
-    <div className={styles.page}>
-      <Route path="/converter" component={App} />
-      {/* <Card
-        className={styles.card}
-        title="Simple converter"
-      >
-        <App />
-      </Card> */}
-    </div>
-  </>
-);
-
-export default AppWrapper;
+export default App;
