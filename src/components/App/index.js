@@ -18,7 +18,6 @@ const App = () => {
           radioDefault={radioState}
         />
         <Loader />
-        ;
       </>
     );
   }
@@ -30,7 +29,6 @@ const App = () => {
         onRadioState={setRadioState}
       />
       <Switch>
-        {/* <div className={styles.page}> */}
         <Route exact path="/">
           <RateDisplay
             radioState={radioState}
@@ -38,7 +36,6 @@ const App = () => {
           />
         </Route>
         <Route exact path="/converter" component={Converter} />
-        {/* </div> */}
       </Switch>
     </>
   );
